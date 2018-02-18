@@ -3,6 +3,8 @@
 import os
 import jinja2 # lahko so rdeci ker v resnici poganja googlov python
 import webapp2
+import datetime
+from datetime import timedelta
 
 
 template_dir = os.path.join(os.path.dirname(__file__), "templates")
@@ -32,11 +34,12 @@ class MainHandler(BaseHandler):
     def get(self):
 
         # tu vpises kodo
+        cas_plus_ura = datetime.datetime.now() + timedelta(hours=1)
+        #trenutni_cas = datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S")
+        trenutni_cas = cas_plus_ura.strftime("%d.%m.%Y %H:%M:%S")
 
-        izzrebane_stevilke = 2+3*5
-
-        info = {"sporocilo": izzrebane_stevilke, "pošiljatelj": "Matija", "stvar": "tretja stvar"}
-        return self.render_template("hello.html", info) #Pokazi ta template
+        info = {"cas": trenutni_cas}
+        return self.render_template("trenutni_cas.html", info) #Pokazi ta template
 
 app = webapp2.WSGIApplication([
     webapp2.Route('/', MainHandler),
